@@ -1,0 +1,83 @@
+<template>
+    <lightning-card title="Volunteer Dashboard" icon-name="custom:custom58">
+
+        <!-- Volunteer Selection -->
+        <lightning-combobox
+            name="volunteer"
+            label="Select Volunteer"
+            value={selectedVolunteerId}
+            placeholder="Choose a Volunteer"
+            options={volunteerOptions}
+            onchange={handleVolunteerChange}
+            class="slds-m-bottom_medium">
+        </lightning-combobox>
+
+        <!-- Total Hours Section -->
+        <lightning-layout horizontal-align="center">
+            <lightning-layout-item size="12">
+                <lightning-card title="Total Hours Contributed" icon-name="standard:dashboard">
+                    <div class="slds-text-heading_large slds-p-around_medium">
+                        <lightning-formatted-number value={totalHours} style="font-size: 2rem;"></lightning-formatted-number>
+                    </div>
+                </lightning-card>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!-- Upcoming Events Section -->
+        <lightning-layout multiple-rows="true" class="slds-m-top_medium">
+            <lightning-layout-item size="12">
+                <lightning-card title="Upcoming Events" icon-name="standard:event">
+                    <template if:true={upcomingEvents}>
+                        <lightning-datatable 
+                            key-field="id" 
+                            data={upcomingEvents} 
+                            columns={columns}
+                            hide-checkbox-column>
+                        </lightning-datatable>
+                    </template>
+                    <template if:false={upcomingEvents}>
+                        <p class="slds-text-body_regular slds-p-around_medium">No upcoming events found.</p>
+                    </template>
+                </lightning-card>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!-- Feedback Submission Section -->
+        <lightning-layout multiple-rows="true" class="slds-m-top_medium">
+            <lightning-layout-item size="12">
+                <lightning-card title="Submit Feedback" icon-name="action:approval">
+                    <div class="slds-p-around_medium">
+                        <lightning-combobox
+                            name="event"
+                            label="Select Event"
+                            value={selectedEventId}
+                            placeholder="Choose an Event"
+                            options={eventOptions}
+                            onchange={handleEventChange}
+                            class="slds-m-bottom_medium">
+                        </lightning-combobox>
+
+                        <lightning-input
+                            label="Rating (1-5)"
+                            type="number"
+                            value={rating}
+                            min="1"
+                            max="5"
+                            onchange={handleRatingChange}
+                            class="slds-m-bottom_medium">
+                        </lightning-input>
+
+                        <lightning-textarea
+                            label="Comments"
+                            value={comments}
+                            onchange={handleCommentsChange}
+                            class="slds-m-bottom_medium">
+                        </lightning-textarea>
+
+                        <lightning-button variant="brand" label="Submit Feedback" onclick={handleSubmitFeedback} class="slds-m-top_medium"></lightning-button>
+                    </div>
+                </lightning-card>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

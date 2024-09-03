@@ -1,0 +1,13 @@
+/* volunteerDashboard.css */
+.slds-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.slds-card .slds-text-heading_large {
+    color: #1d72b8; /* Custom color */
+}
+
+.slds-box {
+    background-color: #f4f6f9; /* Light background for better readability */
+}

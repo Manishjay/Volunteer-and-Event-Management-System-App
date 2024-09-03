@@ -1,0 +1,8 @@
+.calendar-container {
+    height: 100vh; /* Adjust height as needed */
+    width: 100%;
+}
+
+.calendar {
+    height: 100%; /* Adjust height as needed */
+}

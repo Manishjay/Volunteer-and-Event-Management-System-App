@@ -1,0 +1,38 @@
+<template>
+    <div class="event-reg-container">
+    <lightning-card title="Event Registration" icon-name="custom:custom63" class="Registration-card">
+        <div class="slds-p-horizontal_small contents">
+            <lightning-combobox
+                name="event"
+                label="Select Event"
+                value={selectedEventId}
+                placeholder="Choose an Event"
+                options={eventOptions}
+                onchange={handleEventChange}>
+            </lightning-combobox>
+
+            <template if:true={selectedEvent}>
+                <lightning-layout>
+                    <lightning-layout-item size="12">
+                        <p><strong>Event Name:</strong> {selectedEvent.label}</p>
+                        <p><strong>Date:</strong> {selectedEvent.eventDate}</p>
+                        <p><strong>Location:</strong> {selectedEvent.location}</p>
+                        <p><strong>Description:</strong> {selectedEvent.description}</p>
+                    </lightning-layout-item>
+                </lightning-layout>
+
+                <lightning-combobox
+                    name="role"
+                    label="Select Your Role"
+                    value={selectedRole}
+                    placeholder="Choose a Role"
+                    options={roleOptions}
+                    onchange={handleRoleChange}>
+                </lightning-combobox>
+
+                <lightning-button variant="brand" label="Register" onclick={handleRegister} class="slds-m-top_small"></lightning-button>
+            </template>
+        </div>
+    </lightning-card>
+</div>
+</template>
