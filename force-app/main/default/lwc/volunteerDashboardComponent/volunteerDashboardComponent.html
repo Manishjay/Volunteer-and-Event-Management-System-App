@@ -1,13 +1,13 @@
 <template>
     <lightning-card title="Volunteer Dashboard" icon-name="custom:custom58">
-
+        <div class="layout">
         <!-- Volunteer Selection -->
         <lightning-combobox
             name="volunteer"
             label="Select Volunteer"
             value={selectedVolunteerId}
             placeholder="Choose a Volunteer"
-            options={volunteerOptions}
+            options={volunteers}
             onchange={handleVolunteerChange}
             class="slds-m-bottom_medium">
         </lightning-combobox>
@@ -79,5 +79,6 @@
                 </lightning-card>
             </lightning-layout-item>
         </lightning-layout>
+      </div>
     </lightning-card>
 </template>

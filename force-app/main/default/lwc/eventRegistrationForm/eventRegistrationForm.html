@@ -1,38 +1,78 @@
 <template>
+    <div class="bgcolor">
     <div class="event-reg-container">
-    <lightning-card title="Event Registration" icon-name="custom:custom63" class="Registration-card">
-        <div class="slds-p-horizontal_small contents">
-            <lightning-combobox
-                name="event"
-                label="Select Event"
-                value={selectedEventId}
-                placeholder="Choose an Event"
-                options={eventOptions}
-                onchange={handleEventChange}>
-            </lightning-combobox>
+        <lightning-card title="Event Registration" icon-name="custom:custom63" class="registration-card">
+            <div class="slds-p-horizontal_small contents">
+                <div class="slds-m-bottom_medium">
+                    <lightning-combobox
+                        class="slds-input-combobox"
+                        name="Volunteer"
+                        label="Select Volunteer"
+                        value={selectedVolunteerId}
+                        placeholder="Choose a Volunteer"
+                        options={volunteers}
+                        onchange={handleVolunteerChange}>
+                    </lightning-combobox>
+                </div>
+                <!-- Event Selection -->
+                <div class="slds-m-bottom_medium">
+                    <lightning-combobox
+                        class="slds-input-combobox"
+                        name="event"
+                        label="Select Event"
+                        value={selectedEventId}
+                        placeholder="Choose an Event"
+                        options={eventOptions}
+                        onchange={handleEventChange}>
+                    </lightning-combobox>
+                </div>
 
-            <template if:true={selectedEvent}>
-                <lightning-layout>
-                    <lightning-layout-item size="12">
-                        <p><strong>Event Name:</strong> {selectedEvent.label}</p>
-                        <p><strong>Date:</strong> {selectedEvent.eventDate}</p>
-                        <p><strong>Location:</strong> {selectedEvent.location}</p>
-                        <p><strong>Description:</strong> {selectedEvent.description}</p>
-                    </lightning-layout-item>
-                </lightning-layout>
+                <!-- Event Details Display -->
+                <template if:true={selectedEvent}>
+                    <lightning-layout class="slds-m-bottom_medium">
+                        <lightning-layout-item size="12">
+                            <div class="event-details">
+                                <p><strong>Event Name:</strong> {selectedEvent.label}</p>
+                                <p><strong>Date:</strong> {selectedEvent.eventDate}</p>
+                                <p><strong>Location:</strong> {selectedEvent.location}</p>
+                                <p><strong>Description:</strong> {selectedEvent.description}</p>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
 
-                <lightning-combobox
-                    name="role"
-                    label="Select Your Role"
-                    value={selectedRole}
-                    placeholder="Choose a Role"
-                    options={roleOptions}
-                    onchange={handleRoleChange}>
-                </lightning-combobox>
+                    <!-- Role Selection -->
+                    <div class="slds-m-bottom_medium">
+                        <lightning-combobox
+                            class="slds-input-combobox"
+                            name="role"
+                            label="Select Your Role"
+                            value={selectedRole}
+                            placeholder="Choose a Role"
+                            options={roleOptions}
+                            onchange={handleRoleChange}>
+                        </lightning-combobox>
+                    </div>
 
-                <lightning-button variant="brand" label="Register" onclick={handleRegister} class="slds-m-top_small"></lightning-button>
-            </template>
-        </div>
-    </lightning-card>
+                    <div class="buttons">
+                    <!-- Register Button -->
+                    <lightning-button
+                        variant="brand"
+                        label="Register"
+                        onclick={handleRegister}
+                        class="slds-m-top_small register-button">
+                    </lightning-button>
+
+                    <!-- Reset Button -->
+                    <lightning-button
+                        variant="brand"
+                        label="Reset"
+                        onclick={clearFormFields}
+                        class="slds-m-top_small register-button">
+                    </lightning-button>
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+    </div>
 </div>
 </template>

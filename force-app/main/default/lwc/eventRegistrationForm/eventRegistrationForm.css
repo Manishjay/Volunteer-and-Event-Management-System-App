@@ -1,12 +1,42 @@
-/* .event-reg-container{
-    background-color: rebeccapurple;
-}
-.Registration-card{
+.bgcolor{
+    height: 100vh;
+    width: 100%;
     background-color: lightblue;
-    height: 500px;
-    width: 400px;
+}
+.event-reg-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.contents{
-    background-color: lightblue;
-} */
+.registration-card {
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: whitesmoke;
+}
+
+.contents {
+    padding: 20px;
+}
+
+.slds-input-combobox {
+    width: 100%; /* Full width combobox */
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.event-details {
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #d8dde6;
+    border-radius: 5px;
+}
+
+.register-button {
+    width: 100%;
+}
+
+.buttons{
+    display: inline-flex;
+    gap: 4px;
+}

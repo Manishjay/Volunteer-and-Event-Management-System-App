@@ -2,19 +2,34 @@ import { LightningElement, track, wire } from 'lwc';
 import getAvailableEvents from '@salesforce/apex/EventRegistrationController.getAvailableEvents';
 import getRolePicklistValues from '@salesforce/apex/EventRegistrationController.getRolePicklistValues';
 import registerVolunteer from '@salesforce/apex/EventRegistrationController.registerVolunteer';
+import getVolunteers from '@salesforce/apex/VolunteerDashboardController.getVolunteers';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class EventRegistrationForm extends LightningElement {
+    @track volunteers = [];
+    @track selectedVolunteerId;
     @track selectedEventId; 
     @track selectedRole; 
     @track eventOptions = []; 
     @track roleOptions = []; 
     @track selectedEvent = {}; 
 
-    @wire(getAvailableEvents)
-    wiredEvents({ error, data }) {
+    @wire(getVolunteers)
+    wiredVolunteers({ error, data }) {
         if (data) {
-            console.log(data);
+            this.volunteers = data.map(volunteer => ({
+                label: volunteer.Name,
+                value: volunteer.Id
+            }));
+            console.log('Volunteers:', this.volunteers);
+        } else if (error) {
+            console.error('Error fetching volunteers:', error);
+        }
+    }
+
+    @wire(getAvailableEvents)
+    wiredEvents({ error, data }) { 
+        if (data) {
             this.eventOptions = data.map(event => ({
                 label: event.Name, 
                 value: event.Id,
@@ -55,6 +70,11 @@ export default class EventRegistrationForm extends LightningElement {
             });
     }
 
+    handleVolunteerChange(event) {
+        this.selectedVolunteerId = event.detail.value;
+        console.log('Selected Volunteer ID:', this.selectedVolunteerId);
+    }
+
    // Handle event change and populate the selectedEvent object
    handleEventChange(event) {
     this.selectedEventId = event.detail.value;
@@ -67,8 +87,8 @@ export default class EventRegistrationForm extends LightningElement {
 
     handleRegister() {
         console.log('Registration working');
-        if (this.selectedEventId && this.selectedRole) {
-            registerVolunteer({ eventId: this.selectedEventId, role: this.selectedRole })
+        if (this.selectedVolunteerId && this.selectedEventId && this.selectedRole) {
+            registerVolunteer({ VolunteerId: this.selectedVolunteerId, eventId: this.selectedEventId, role: this.selectedRole })
                 .then(() => {
                     this.dispatchEvent(
                         new ShowToastEvent({
@@ -77,6 +97,9 @@ export default class EventRegistrationForm extends LightningElement {
                             variant: 'success',
                         }),
                     );
+    
+                    // Clear the selected values after successful registration
+                    this.clearFormFields();
                 })
                 .catch(error => {
                     this.dispatchEvent(
@@ -96,5 +119,20 @@ export default class EventRegistrationForm extends LightningElement {
                 }),
             );
         }
+    }    
+
+    clearFormFields() {
+        // Reset tracked properties to their initial values
+        this.selectedVolunteerId = null;
+        this.selectedEventId = null;
+        this.selectedRole = null;
+        this.selectedEvent = {};
+    
+        // Optionally, reset the value attributes of the comboboxes
+        // this.template.querySelectorAll('lightning-combobox').forEach(combobox => {
+        //     combobox.value = null;
+        // });
+    
+        console.log('Form fields cleared');
     }
 }

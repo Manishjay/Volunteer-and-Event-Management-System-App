@@ -1,7 +1,7 @@
 public with sharing class EventRegistrationController {
     @AuraEnabled(cacheable=true)
     public static List<Event__c> getAvailableEvents() {
-        return [SELECT Id, Name, Event_Date__c, Location__c, Description__c FROM Event__c];
+        return [SELECT Id, Name, Event_Date__c, Location__c, Description__c FROM Event__c WHERE Status__c = 'Open For Registration'];
     }
 
     @AuraEnabled(cacheable=true)
@@ -21,10 +21,9 @@ public with sharing class EventRegistrationController {
     }
 
     @AuraEnabled
-    public static void registerVolunteer(Id eventId, String role) {
-        Volunteer__c currentVolunteer = [SELECT Id FROM Volunteer__c WHERE Name = :UserInfo.getUserName() LIMIT 1];
+    public static void registerVolunteer(Id eventId, String role, Id VolunteerId ) {
         Volunteer_Event__c volunteerEvent = new Volunteer_Event__c();
-        volunteerEvent.Volunteer__c = currentVolunteer.Id;
+        volunteerEvent.Volunteer__c = VolunteerId;
         volunteerEvent.Event__c = eventId;
         volunteerEvent.Role__c = role;
         volunteerEvent.Status__c = 'Registered';
